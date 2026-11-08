@@ -11,6 +11,8 @@
   const putBtn = document.getElementById("put");
   const patchBtn = document.getElementById("patch");
   const deleteBtn = document.getElementById("delete");
+  const userIdInput = document.getElementById("userId");
+  const filterBtn = document.getElementById("filter");
 
   const apiURL = "https://6ae8bf021a7b15aaa50f6d8d.mockapi.io/api/v1/users";
 
@@ -197,5 +199,33 @@
     }).then((response) => {
       answer.innerHTML = `Post o id = 1 usuniety (status: ${response.status})`;
     });
+  });
+
+  filterBtn.addEventListener("click", () => {
+    answer.innerHTML = "Loading...";
+    const userId = userIdInput.value;
+    fetch(`https://jsonplaceholder.typicode.com/posts?userId=${userId}`)
+      .then((response) => response.json())
+      .then((array) => {
+        let html = `<table style="width: 100%; border-collapse: collapse; text-align: center;">
+        <tr>
+          <th>ID</th>
+          <th>Title</th>
+          <th>Body</th>
+          <th>Author</th>
+        </tr>`;
+        array.forEach((element) => {
+          html += `
+                <tr>
+                    <td>${element.id}</td>
+                    <td>${element.title}</td>
+                    <td>${element.body}</td>
+                    <td>${element.userId}</td>
+                </tr>
+            `;
+        });
+        html += "</table>";
+        answer.innerHTML = html;
+      });
   });
 })();
