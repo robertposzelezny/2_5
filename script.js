@@ -14,6 +14,8 @@
   const userIdInput = document.getElementById("userId");
   const filterBtn = document.getElementById("filter");
   const commentsBtn = document.getElementById("comments");
+  const prevBtn = document.getElementById("prevPage");
+  const nextBtn = document.getElementById("nextPage");
 
   const apiURL = "https://6ae8bf021a7b15aaa50f6d8d.mockapi.io/api/v1/users";
 
@@ -242,5 +244,37 @@
         html += "</ul>";
         answer.innerHTML = html;
       });
+  });
+
+  const limit = 10;
+  let start = 0;
+
+  function loadPage() {
+    answer.innerHTML = "Loading...";
+    fetch(
+      `https://jsonplaceholder.typicode.com/posts?_start=${start}&_limit=${limit}`,
+    )
+      .then((response) => response.json())
+      .then((array) => {
+        let html = "<ul>";
+        array.forEach((post) => {
+          html += `<li>${post.id}. ${post.title} <br> ${post.body}</li>`;
+        });
+        html += "</ul>";
+        answer.innerHTML = html;
+      });
+  }
+
+  nextBtn.addEventListener("click", () => {
+    if (start < 90) {
+      start += 10;
+      loadPage();
+    }
+  });
+  prevBtn.addEventListener("click", () => {
+    if (start > 0) {
+      start -= 10;
+      loadPage();
+    }
   });
 })();
