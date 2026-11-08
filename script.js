@@ -13,6 +13,7 @@
   const deleteBtn = document.getElementById("delete");
   const userIdInput = document.getElementById("userId");
   const filterBtn = document.getElementById("filter");
+  const commentsBtn = document.getElementById("comments");
 
   const apiURL = "https://6ae8bf021a7b15aaa50f6d8d.mockapi.io/api/v1/users";
 
@@ -225,6 +226,20 @@
             `;
         });
         html += "</table>";
+        answer.innerHTML = html;
+      });
+  });
+
+  commentsBtn.addEventListener("click", () => {
+    answer.innerHTML = "Loading...";
+    fetch("https://jsonplaceholder.typicode.com/posts/1/comments")
+      .then((response) => response.json())
+      .then((array) => {
+        let html = `Komentarze do posta ID=1<ul>`;
+        array.forEach((comment) => {
+          html += `<li><b>${comment.name}</b> <br> ${comment.body}</li>`;
+        });
+        html += "</ul>";
         answer.innerHTML = html;
       });
   });
