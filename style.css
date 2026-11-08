@@ -1,0 +1,15 @@
+html {
+    height: 100%;
+    width: 100%;
+}
+
+.popup {
+    display: none;
+    background: #1e6fd9;
+    color: white;
+    z-index: 1000;
+}
+
+.popup.visible {
+    display: block;
+}
